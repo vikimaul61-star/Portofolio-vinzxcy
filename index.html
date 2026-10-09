@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vinxzcy — Developer</title>
+<link rel="icon" href="logo.png">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#05050a;--card:rgba(20,20,28,.7);--border:rgba(255,255,255,.08);--accent:#1e4dff;--accent2:#5b2bff;--text:#e8e8e8;--muted:#888}
+html{scroll-behavior:smooth}
+body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;line-height:1.6;cursor:none}
+body::before{content:"";position:fixed;inset:-50%;z-index:-2;background:radial-gradient(circle at 20% 30%,rgba(30,77,255,.3),transparent 40%),radial-gradient(circle at 80% 70%,rgba(255,0,100,.25),transparent 40%),radial-gradient(circle at 50% 50%,rgba(0,255,200,.15),transparent 50%),radial-gradient(circle at 90% 20%,rgba(180,0,255,.2),transparent 45%);animation:bgmove 25s ease-in-out infinite;filter:blur(50px)}
+body::after{content:"";position:fixed;inset:0;z-index:-1;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:50px 50px;animation:gridmove 30s linear infinite;pointer-events:none}
+@keyframes bgmove{0%,100%{transform:translate(0,0) rotate(0deg)}25%{transform:translate(5%,-5%) rotate(15deg)}50%{transform:translate(-5%,5%) rotate(-15deg)}75%{transform:translate(3%,3%) rotate(10deg)}}
+@keyframes gridmove{0%{background-position:0 0,0 0}100%{background-position:50px 50px,50px 50px}}
+.scroll-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#1e4dff,#5b2bff);z-index:9999;width:0%;transition:width .1s}
+.cursor-dot{position:fixed;width:8px;height:8px;background:#1e4dff;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);box-shadow:0 0 10px #1e4dff}
+.cursor-glow{position:fixed;width:200px;height:200px;background:radial-gradient(circle,rgba(30,77,255,.15),transparent 70%);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .15s}
+@media(max-width:640px){.cursor-dot,.cursor-glow{display:none}body{cursor:auto}}
+#particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;opacity:.5}
+.ripple{position:fixed;border-radius:50%;background:rgba(30,77,255,.4);transform:scale(0);animation:rip .6s ease-out;pointer-events:none;z-index:9999}
+@keyframes rip{to{transform:scale(4);opacity:0}}
+/* MUSIC */
+.music-btn{position:fixed;bottom:24px;right:24px;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#1e4dff,#5b2bff);border:none;color:#fff;font-size:22px;cursor:pointer;z-index:999;box-shadow:0 4px 20px rgba(30,77,255,.6);transition:all .3s;display:flex;align-items:center;justify-content:center}
+.music-btn:hover{transform:scale(1.1);box-shadow:0 6px 30px rgba(30,77,255,.9)}
+.music-btn.playing{animation:pulseMusic 1.5s ease-in-out infinite}
+@keyframes pulseMusic{0%,100%{box-shadow:0 4px 20px rgba(30,77,255,.6)}50%{box-shadow:0 4px 40px rgba(30,77,255,1),0 0 0 10px rgba(30,77,255,.15)}}
+@media(max-width:640px){.music-btn{width:46px;height:46px;font-size:18px;bottom:18px;right:18px}}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;background:rgba(5,5,10,.75);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+nav .logo{font-weight:800;font-size:16px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+nav .links{display:flex;gap:20px}
+nav a{color:var(--muted);text-decoration:none;font-size:13px;transition:color .2s}
+nav a:hover{color:#fff}
+section{padding:100px 24px;max-width:1100px;margin:0 auto}
+section:not(.hero){opacity:0;transform:translateY(40px);transition:opacity .8s,transform .8s}
+section:not(.hero).show{opacity:1;transform:translateY(0)}
+.hero{min-height:100dvh;display:flex;flex-direction:column;justify-content:center;padding-top:120px;padding-bottom:80px;opacity:1;transform:none}
+.hero .greet{color:var(--muted);font-size:14px;letter-spacing:2px;margin-bottom:12px;text-transform:uppercase}
+.hero h1{font-size:clamp(36px,8vw,72px);font-weight:800;line-height:1.1;margin-bottom:16px;background:linear-gradient(135deg,#fff,#a8b8ff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;position:relative}
+.hero h1::before,.hero h1::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%;-webkit-background-clip:text;background-clip:text}
+.hero h1::before{color:#ff0055;-webkit-text-fill-color:#ff0055;opacity:.7;animation:glitch1 3s infinite}
+.hero h1::after{color:#00ffe0;-webkit-text-fill-color:#00ffe0;opacity:.7;animation:glitch2 3s infinite}
+@keyframes glitch1{0%,90%,100%{transform:translate(0)}92%{transform:translate(-2px,2px)}94%{transform:translate(2px,-2px)}96%{transform:translate(-1px,1px)}}
+@keyframes glitch2{0%,90%,100%{transform:translate(0)}93%{transform:translate(2px,-1px)}95%{transform:translate(-2px,1px)}97%{transform:translate(1px,2px)}}
+.hero .role{font-size:clamp(16px,3vw,22px);color:var(--muted);margin-bottom:24px;min-height:32px}
+.hero .role b{color:var(--accent);font-weight:700}
+#typed{border-right:2px solid #1e4dff;padding-right:4px;animation:blink 1s infinite}
+@keyframes blink{0%,49%{border-color:#1e4dff}50%,100%{border-color:transparent}}
+.hero .bio{color:#bbb;max-width:600px;margin-bottom:32px;font-size:15px}
+.buttons{display:flex;gap:12px;flex-wrap:wrap}
+.btn{padding:14px 28px;border-radius:12px;font-size:14px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .25s;border:1px solid transparent;cursor:pointer}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 4px 20px rgba(30,77,255,.4)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(30,77,255,.6)}
+.btn-outline{border-color:var(--border);color:#fff}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.stats{display:flex;gap:40px;margin-top:40px;flex-wrap:wrap}
+.stat .num{font-size:32px;font-weight:800;background:linear-gradient(135deg,#1e4dff,#5b2bff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.stat .lbl{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.marquee{overflow:hidden;padding:20px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(30,77,255,.05);margin:40px 0}
+.marquee-track{display:flex;gap:40px;animation:marquee 30s linear infinite;white-space:nowrap}
+.marquee-track span{font-size:20px;font-weight:800;color:rgba(255,255,255,.15);letter-spacing:4px}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.center-logo{padding:70px 20px;display:flex;justify-content:center;align-items:center;position:relative}
+.center-logo::before{content:"";position:absolute;width:340px;height:340px;background:radial-gradient(circle,rgba(30,77,255,.35),transparent 70%);border-radius:50%;animation:pulseGlow 3s ease-in-out infinite;z-index:-1}
+@keyframes pulseGlow{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.15);opacity:1}}
+.center-logo img{width:240px;height:240px;object-fit:contain;border-radius:50%;filter:drop-shadow(0 0 40px rgba(30,77,255,.9));animation:logoFloat 4s ease-in-out infinite;border:2px solid rgba(30,77,255,.4);background:rgba(0,0,0,.3);padding:6px}
+@keyframes logoFloat{0%,100%{transform:translateY(0) scale(1) rotate(0deg)}50%{transform:translateY(-15px) scale(1.05) rotate(2deg)}}
+@media(max-width:640px){.center-logo img{width:180px;height:180px}.center-logo::before{width:260px;height:260px}}
+h2{font-size:clamp(24px,5vw,36px);font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:12px}
+h2 .num{color:var(--accent);font-size:20px;font-family:monospace}
+.section-sub{color:var(--muted);margin-bottom:40px;font-size:14px}
+.card{background:var(--card);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:16px;padding:28px;transition:all .3s}
+.card:hover{border-color:rgba(30,77,255,.4);box-shadow:0 12px 40px rgba(30,77,255,.15)}
+.card p{font-size:15px;color:#c5c5c5;margin-bottom:16px;line-height:1.75}
+.card p:last-child{margin-bottom:0}
+.card p b{color:var(--accent)}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.skill{padding:20px;background:var(--card);border:1px solid var(--border);border-radius:14px}
+.skill .name{font-weight:600;margin-bottom:10px;display:flex;justify-content:space-between;font-size:14px}
+.skill .name span:last-child{color:var(--accent);font-family:monospace;font-size:12px}
+.skill .bar{height:6px;background:rgba(255,255,255,.08);border-radius:10px;overflow:hidden}
+.skill .fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:10px;transition:width 1s ease}
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.project{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:transform .3s,box-shadow .3s,border-color .3s;transform-style:preserve-3d}
+.project:hover{border-color:rgba(30,77,255,.5);box-shadow:0 20px 50px rgba(30,77,255,.2)}
+.project .thumb{height:160px;background:linear-gradient(135deg,#1e4dff33,#5b2bff33);display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--accent);border-bottom:1px solid var(--border)}
+.project .body{padding:20px}
+.project h3{font-size:17px;margin-bottom:8px}
+.project p{font-size:13px;color:#aaa;margin-bottom:14px}
+.project .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tag{font-size:10px;padding:4px 10px;background:rgba(30,77,255,.15);color:#7a9fff;border-radius:6px;font-weight:600;letter-spacing:.5px}
+.project .links{display:flex;gap:12px;font-size:12px}
+.project .links a{color:var(--accent);text-decoration:none;font-weight:600}
+.project .links a:hover{text-decoration:underline}
+.timeline{position:relative;padding-left:28px}
+.timeline::before{content:"";position:absolute;left:8px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--accent),var(--accent2),transparent)}
+.tl-item{position:relative;padding-bottom:32px}
+.tl-item::before{content:"";position:absolute;left:-28px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:0 0 15px var(--accent);border:2px solid var(--bg)}
+.tl-item .date{font-size:12px;color:var(--accent);font-family:monospace;margin-bottom:4px}
+.tl-item h3{font-size:16px;margin-bottom:4px}
+.tl-item .place{font-size:13px;color:var(--muted);margin-bottom:8px}
+.tl-item .desc{font-size:13px;color:#aaa}
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.contact-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;text-decoration:none;color:#fff;display:flex;flex-direction:column;gap:8px;transition:all .3s}
+.contact-card:hover{transform:translateY(-4px);border-color:var(--accent);background:rgba(30,77,255,.08)}
+.contact-card .icon{font-size:24px}
+.contact-card .label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.contact-card .value{font-size:14px;font-weight:600;word-break:break-all}
+footer{padding:30px 24px;text-align:center;border-top:1px solid var(--border);color:var(--muted);font-size:12px}
+footer b{color:#fff}
+@media(max-width:640px){nav .links{gap:14px}nav a{font-size:12px}section{padding:70px 20px}.hero{padding-top:100px}.card{padding:20px}.card p{font-size:14px}.stats{gap:24px}}
+</style>
+</head>
+<body>
+
+<div class="scroll-bar" id="sbar"></div>
+<div class="cursor-dot"></div>
+<div class="cursor-glow"></div>
+<canvas id="particles"></canvas>
+
+<audio id="bgm" src="music.mp3" loop preload="auto"></audio>
+<button class="music-btn" id="musicBtn" onclick="toggleMusic()"><span id="musicIcon">🔇</span></button>
+
+<nav>
+  <div class="logo">VINZXCY 🥶</div>
+  <div class="links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#experience">Exp</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="greet">✦ Halo, saya</div>
+  <h1 data-text="Vinxzcy">Vinxzcy</h1>
+  <div class="role">Seorang <b id="typed"></b></div>
+  <p class="bio">Gue bikin tools, aplikasi web, AI, dan automation. Fokus gue: ngubah ide jadi produk yang beneran jalan — bukan cuma konsep.</p>
+  <div class="buttons">
+    <a href="#projects" class="btn btn-primary">Lihat Karya →</a>
+    <a href="https://vinzxcyyai.netlify.app/" target="_blank" class="btn btn-outline">🤖 Coba AI Support</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="num">15+</div><div class="lbl">Projects</div></div>
+    <div class="stat"><div class="num">3+</div><div class="lbl">Years Coding</div></div>
+    <div class="stat"><div class="num">∞</div><div class="lbl">Curiosity</div></div>
+  </div>
+</section>
+
+<div class="marquee">
+  <div class="marquee-track">
+    <span>DEVELOPER ✦ BUILDER ✦ CREATOR ✦ PROBLEM SOLVER ✦ SELF-TAUGHT ✦ VINZXCY ✦ </span>
+    <span>DEVELOPER ✦ BUILDER ✦ CREATOR ✦ PROBLEM SOLVER ✦ SELF-TAUGHT ✦ VINZXCY ✦ </span>
+  </div>
+</div>
+
+<div class="center-logo">
+  <img src="logo.png" alt="Vinxzcy Logo">
+</div>
+
+<section id="about">
+  <h2><span class="num">01.</span> Tentang Gue</h2>
+  <p class="section-sub">// Siapa gue, apa yang gue kerjain</p>
+  <div class="card">
+    <p>Halo. Nama gue <b>Vinxzcy</b> — developer, builder, dan seseorang yang percaya kalau ide bagus itu nggak seharusnya cuma jadi konsep di kepala. Gue mulai dari nol, otodidak, tanpa mentor, tanpa bootcamp. Semua yang gue tau — HTML, CSS, JavaScript, Python, Node.js, Firebase, API, automation, AI — gue pelajarin sendiri dari rasa penasaran yang nggak pernah puas.</p>
+    <p>Gue ngoding karena emang suka. Ada kepuasan tersendiri waktu lo bikin sesuatu dari kosong, terus liat orang lain pakai, dan alat itu beneran ngebantu. Dari situ gue bikin macem-macem: tools OSINT, AI chatbot, generator, automation, dashboard, downloader — apapun yang bisa gue pikirin, gue coba wujudin.</p>
+    <p>Project yang paling gue banggain: <b>Vinxzcyy AI</b> — custom chatbot yang gue bangun dari nol, lengkap dengan personality sendiri. Gue desain sistem prompt-nya, gue atur tone-nya, gue bikin biar user ngerasa ngobrol sama sesuatu yang hidup. Project lain: <b>Vinxz OSINT</b> — toolkit intelijen yang gue rancang buat auto-check username di banyak platform. Modal GitHub Pages + Cloudflare Worker doang — gratis, jalan, dari HP.</p>
+    <p>Yang bikin gue beda? Gue nggak nunggu sempurna. Gue nggak nunggu tools mahal. Gue nggak nunggu laptop gaming atau VPS bayar. Gue ngerjain semuanya dari HP — sambil rebahan, sambil duduk di angkot, sambil nunggu sesuatu. Karena gue percaya: <b>yang penting bukan alatnya, tapi niat dan cara mikir</b>.</p>
+    <p>Prinsip gue: <b>produk bagus itu bukan yang paling kompleks, tapi yang paling simpel dan jalan</b>. Gue lebih milih bikin tools sederhana yang beneran ngebantu orang sehari-hari. Fitur dikit nggak masalah — yang penting fungsional, cepet, dan bisa dipakai siapa aja tanpa ribet.</p>
+    <p>Ke depan, gue pengen terus belajar — bukan cuma soal coding, tapi juga gimana bikin produk yang berguna, bangun komunitas, dan ngembangin ide jadi bisnis yang sustain. Kalau lo punya ide, project, atau cuma pengen ngobrol soal teknologi — reach out. <b>Let's build something.</b></p>
+  </div>
+</section>
+
+<section id="skills">
+  <h2><span class="num">02.</span> Skills</h2>
+  <p class="section-sub">// Teknologi yang gue kuasai</p>
+  <div class="skills-grid">
+    <div class="skill"><div class="name"><span>HTML/CSS</span><span>95%</span></div><div class="bar"><div class="fill" style="width:95%"></div></div></div>
+    <div class="skill"><div class="name"><span>JavaScript</span><span>90%</span></div><div class="bar"><div class="fill" style="width:90%"></div></div></div>
+    <div class="skill"><div class="name"><span>Python</span><span>85%</span></div><div class="bar"><div class="fill" style="width:85%"></div></div></div>
+    <div class="skill"><div class="name"><span>Node.js</span><span>80%</span></div><div class="bar"><div class="fill" style="width:80%"></div></div></div>
+    <div class="skill"><div class="name"><span>Firebase</span><span>85%</span></div><div class="bar"><div class="fill" style="width:85%"></div></div></div>
+    <div class="skill"><div class="name"><span>UI/UX Design</span><span>75%</span></div><div class="bar"><div class="fill" style="width:75%"></div></div></div>
+  </div>
+</section>
+
+<section id="projects">
+  <h2><span class="num">03.</span> Projects</h2>
+  <p class="section-sub">// Karya & eksperimen gue — 15 project aktif</p>
+  <div class="projects-grid">
+
+    <div class="project"><div class="thumb">🤖</div><div class="body"><h3>Vinxzcyy AI ☠️</h3><p>Custom AI chatbot dengan mode DESTROYER. Personality bebas, responsif, bisa generate gambar via prompt.</p><div class="tags"><span class="tag">AI</span><span class="tag">Chatbot</span><span class="tag">HTML</span></div><div class="links"><a href="https://vinzxcyyai.netlify.app/" target="_blank">Live →</a></div></div></div>
+
+    <div class="project"><div class="thumb">🔍</div><div class="body"><h3>Vinxz OSINT</h3><p>Toolkit Open Source Intelligence — auto-check username di 5 platform, cek email, HP, domain, IP geolocation.</p><div class="tags"><span class="tag">OSINT</span><span class="tag">Worker</span><span class="tag">API</span></div><div class="links"><a href="https://vinzxcyy.github.io/osint/" target="_blank">Live →</a></div></div></div>
+
+    <div class="project"><div class="thumb">💳</div><div class="body"><h3>FakePay Generator</h3><p>Generator screenshot fake payment — 17 tipe: bank, e-wallet, game top-up, crypto, PayPal, struk ATM.</p><div class="tags"><span class="tag">Generator</span><span class="tag">HTML</span><span class="tag">CSS</span></div><div class="links"><a href="https://vinzxcyy.github.io/osint/fakepay.html" target="_blank">Live →</a></div></div></div>
+
+    <div class="project"><div class="thumb">🎯</div><div class="body"><h3>Phishing Tracker</h3><p>Landing page + GPS tracker via Firebase + Telegram bot. Notif real-time tiap ada yang klik link.</p><div class="tags"><span class="tag">Firebase</span><span class="tag">Telegram</span><span class="tag">Tracker</span></div><div class="links"><a href="https://github.com/vinzxcyy" target="_blank">GitHub →</a></div></div></div>
+
+    <div class="project"><div class="thumb">📱</div><div class="body"><h3>Vinxz AllMenu</h3><p>Kumpulan tools dalam 1 halaman — AI chat, OSINT, fake pay, text tools, QR gen, password gen.</p><div class="tags"><span class="tag">Dashboard</span><span class="tag">Multi-Tool</span></div><div class="links"><a href="https://github.com/vinzxcyy" target="_blank">GitHub →</a></div></div></div>
+
+    <div class="project"><div class="thumb">🔐</div><div class="body"><h3>PassForge</h3><p>Password generator dengan custom rules — panjang, simbol, angka. Plus strength meter & copy.</p><div class="tags"><span class="tag">Security</span><span class="tag">JS</span></div><div class="links"><a href="https://github.com/vinzxcyy" target="_blank">GitHub →</a></div></div></div>
+
+    <div class="project"><div class="thumb">🎨</div><div class="body"><h3>QR Forge</h3><p>Generator QR code custom — warna, logo, download PNG. Buat link, teks, WA, email, WiFi.</p><div class="tags"><span class="tag">QR</span><span class="tag">Generator</span></div><div class="links"><a href="https://github.com/vinzxcyy" target="_blank">GitHub →</a></div></div></div>
+
+    <div class="project"><div class="thumb">📥</div><div class="body"><h3>Vinxz Downloader</h3><p>Downloader TikTok/IG/YouTube/Facebook tanpa watermark. Tinggal paste URL, langsung download.</p><div class="tags"><span class="tag">Downloader</span><span class="tag">API</span></div><div class="links"><a href="https://github.com/vinzxcyy" target="_blank">GitHub →</a></div></div></div>
+
+    <div class="project"><div class="thumb">💬</div><div class="body"><h3>Fake Chat Generator</h3><p>Bikin screenshot chat palsu — WhatsApp, Telegram, IG DM. Buat fiksi, prank, konten.</p><div class="tags"><span class="tag">Generator</span><span class="tag">UI</span></div><div class="links"><a href="https://github.com/vinzxcyy" target="_blank">GitHub →</a></div></div></div>
+
+    <div class="project"><div class="thumb">📊</div><div class="body"><h3>Vinxz Dashboard</h3><p>Panel admin real-time — chart, tabel data, multi-user. Backend Firebase, frontend ringan.</p><div class="tags"><span class="tag">Firebase</span><span class="tag">Chart.js</span></div><div class="links"><a href="https://github.com/vinzxcyy" target="_blank">GitHub →</a></div></div></div>
+
+    <div class="project"><div class="thumb">🔗</div><div class="body"><h3>Vinxz Shortlink</h3><p>Link shortener dengan tracking klik — statistik lengkap, custom slug, QR auto.</p><div class="tags"><span class="tag">URL</span><span class="tag">Tracking</span></div><div class="links"><a href="https://github.com/vinzxcyy" target="_blank">GitHub →</a></div></div></div>
+
+    <div class="project"><div class="thumb">🎮</div><div class="body"><h3>Cheat Engine ML</h3><p>Tools eksperimen — memory scanner, speed control. Buat research & edukasi reverse engineering.</p><div class="tags"><span class="tag">Reverse</span><span class="tag">Edukasi</span></div><div class="links"><a href="https://github.com/vinzxcyy" target="_blank">GitHub →</a></div></div></div>
+
+    <div class="project"><div class="thumb">📝</div><div class="body"><h3>Vinxz Notes</h3><p>Notes app offline — markdown support, folder, tag, sync lokal. Nggak butuh login.</p><div class="tags"><span class="tag">App</span><span class="tag">Offline</span></div><div class="links"><a href="https://github.com/vinzxcyy" target="_blank">GitHub →</a></div></div></div>
+
+    <div class="project"><div class="thumb">🌐</div><div class="body"><h3>IP Lookup Tool</h3><p>Cek info IP — geolocation, ISP, negara, timezone. Real-time via API.</p><div class="tags"><span class="tag">API</span><span class="tag">Network</span></div><div class="links"><a href="https://github.com/vinzxcyy" target="_blank">GitHub →</a></div></div></div>
+
+    <div class="project"><div class="thumb">🎭</div><div class="body"><h3>Vinxz Scraper</h3><p>Scraper data publik — marketplace, sosmed, website. Export ke CSV/JSON.</p><div class="tags"><span class="tag">Scraper</span><span class="tag">Python</span></div><div class="links"><a href="https://github.com/vinzxcyy" target="_blank">GitHub →</a></div></div></div>
+
+  </div>
+</section>
+
+<section id="experience">
+  <h2><span class="num">04.</span> Experience</h2>
+  <p class="section-sub">// Perjalanan gue</p>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="date">2024 — Sekarang</div>
+      <h3>Freelance Developer</h3>
+      <div class="place">Remote · Indonesia</div>
+      <div class="desc">Ngerjain project web, automation, tools OSINT, dan AI custom buat klien & personal project.</div>
+    </div>
+    <div class="tl-item">
+      <div class="date">2023 — 2024</div>
+      <h3>Web Developer</h3>
+      <div class="place">Personal Project</div>
+      <div class="desc">Bikin frontend & backend aplikasi web. Fokus di UI/UX dan optimasi performa.</div>
+    </div>
+    <div class="tl-item">
+      <div class="date">2022 — 2023</div>
+      <h3>Belajar & Eksperimen</h3>
+      <div class="place">Self-taught</div>
+      <div class="desc">Belajar coding otodidak. Bikin project pribadi: bot, scraper, tools OSINT, AI.</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <h2><span class="num">05.</span> Contact</h2>
+  <p class="section-sub">// Mau kolaborasi? Reach out.</p>
+  <div class="contact-grid">
+    <a href="mailto:vikimaul61@gmail.com" class="contact-card"><div class="icon">✉️</div><div class="label">Email</div><div class="value">vikimaul61@gmail.com</div></a>
+    <a href="https://wa.me/628211625647" target="_blank" class="contact-card"><div class="icon">💬</div><div class="label">WhatsApp</div><div class="value">+62 821-1625-647</div></a>
+    <a href="https://www.instagram.com/vinzxcyyy" target="_blank" class="contact-card"><div class="icon">📷</div><div class="label">Instagram</div><div class="value">@vinzxcyyy</div></a>
+    <a href="https://tiktok.com/@viki_store1" target="_blank" class="contact-card"><div class="icon">🎵</div><div class="label">TikTok</div><div class="value">@viki_store1</div></a>
+    <a href="https://whatsapp.com/channel/0029VbDvQ9Q7z4kjbt15oC2s" target="_blank" class="contact-card"><div class="icon">📢</div><div class="label">Saluran WA</div><div class="value">Vinxzcy Channel</div></a>
+    <a href="https://github.com/vinzxcyy" target="_blank" class="contact-card"><div class="icon">🐙</div><div class="label">GitHub</div><div class="value">@vinzxcyy</div></a>
+    <a href="mailto:vikimaul767@gmail.com" class="contact-card"><div class="icon">✉️</div><div class="label">Email 2</div><div class="value">vikimaul767@gmail.com</div></a>
+    <a href="https://vinzxcyyai.netlify.app/" target="_blank" class="contact-card"><div class="icon">🤖</div><div class="label">AI Support</div><div class="value">Vinxzcyy AI</div></a>
+  </div>
+</section>
+
+<footer>
+  © 2025 <b>VINZXCY 🥶</b> · Dibuat dari HP · Powered by GitHub Pages
+</footer>
+
+<script>
+const bgm=document.getElementById('bgm');
+const musicBtn=document.getElementById('musicBtn');
+const musicIcon=document.getElementById('musicIcon');
+function toggleMusic(){
+  if(bgm.paused){bgm.play();musicIcon.textContent='🔊';musicBtn.classList.add('playing')}
+  else{bgm.pause();musicIcon.textContent='🔇';musicBtn.classList.remove('playing')}
+}
+let musicStarted=false;
+function startMusicOnFirstClick(){
+  if(!musicStarted){
+    bgm.volume=0.3;
+    bgm.play().then(()=>{musicIcon.textContent='🔊';musicBtn.classList.add('playing');musicStarted=true}).catch(()=>{});
+  }
+  document.removeEventListener('click',startMusicOnFirstClick);
+}
+document.addEventListener('click',startMusicOnFirstClick);
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  document.getElementById('sbar').style.width=(window.scrollY/h*100)+'%';
+});
+const dot=document.querySelector('.cursor-dot'),glow=document.querySelector('.cursor-glow');
+document.addEventListener('mousemove',e=>{
+  dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px';
+  glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px';
+});
+const cv=document.getElementById('particles'),cx=cv.getContext('2d');
+let W,H,P=[];
+function initP(){W=cv.width=innerWidth;H=cv.height=innerHeight;P=[];for(let i=0;i<50;i++)P.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*2+.5,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5})}
+function drawP(){cx.clearRect(0,0,W,H);cx.fillStyle='#1e4dff';P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;cx.beginPath();cx.arc(p.x,p.y,p.r,0,7);cx.fill()});requestAnimationFrame(drawP)}
+initP();drawP();addEventListener('resize',initP);
+document.addEventListener('click',e=>{
+  const r=document.createElement('div');
+  r.className='ripple';
+  r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';
+  r.style.width='20px';r.style.height='20px';
+  r.style.marginLeft='-10px';r.style.marginTop='-10px';
+  document.body.appendChild(r);
+  setTimeout(()=>r.remove(),600);
+});
+const words=["Developer","Creative Builder","Problem Solver","AI Enthusiast","Self-taught Coder"];
+let wi=0,ci=0,del=false;
+const el=document.getElementById('typed');
+function type(){
+  const w=words[wi];
+  el.textContent=del?w.substring(0,ci--):w.substring(0,ci++);
+  if(!del&&ci===w.length+1){del=true;setTimeout(type,1500);return}
+  if(del&&ci===0){del=false;wi=(wi+1)%words.length}
+  setTimeout(type,del?50:100);
+}
+type();
+const secObs=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')});
+},{threshold:.1});
+document.querySelectorAll('section').forEach(s=>secObs.observe(s));
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.fill').forEach(f=>{
+        const w=f.style.width;f.style.width='0';
+        setTimeout(()=>{f.style.width=w},100);
+      });
+    }
+  });
+},{threshold:.3});
+document.querySelectorAll('#skills').forEach(el=>observer.observe(el));
+document.querySelectorAll('.project').forEach(c=>{
+  c.addEventListener('mousemove',e=>{
+    const r=c.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-.5;
+    const y=(e.clientY-r.top)/r.height-.5;
+    c.style.transform=`perspective(800px) rotateY(${x*10}deg) rotateX(${-y*10}deg) translateY(-6px)`;
+  });
+  c.addEventListener('mouseleave',()=>{c.style.transform=''});
+});
+</script>
+</body>
+</html>
